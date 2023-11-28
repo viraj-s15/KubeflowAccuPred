@@ -4,7 +4,8 @@ def data_preprocessing() -> None:
     import logging 
     from sklearn.preprocessing import LabelEncoder
     logging.basicConfig(level = logging.INFO)
-    
+    print('#' * 100)
+    logging.info("Starting Data Preprocessing Component")
     filename="data/data.csv"
     df = pd.read_csv(filename)
     logging.info("File has been loaded")
@@ -27,6 +28,7 @@ def data_preprocessing() -> None:
     logging.info("Encoding complete")
     df.to_csv("data/processed_data.csv",index=False)
     logging.info("Preprocessed csv file has been saved into data/processed_data.csv")
+    print('#' * 100)
 
 
 if __name__ == "__main__":
