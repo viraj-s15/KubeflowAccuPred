@@ -1,1 +1,7 @@
+
+# Virtual Env
 .venv
+
+# Cache
+data_preprocessing/__pycache__/data_preprocessing.cpython-311.pyc
+data_preprocessing/__pycache__/__init__.cpython-311.pyc
