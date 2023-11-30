@@ -8,6 +8,7 @@ def hyperparam_optim() -> None:
     import logging
     import os
     import json
+    import pickle
     
     logging.basicConfig(level=logging.INFO)
     logging.info("Started Hyperparameter Optimization")
@@ -74,8 +75,26 @@ def hyperparam_optim() -> None:
 
         logging.info("Completed Hyperparameter Optimization")
         logging.info(f"Best hyperparameters saved to: {file_path}")
+        
+        logging.info("Training model with best hyperparams")
+        dtrain = xgb.DMatrix(X_train, label=y_train)
+        logging.info("Training model with best hyperparams")
+        best_bst = xgb.train(best_params, dtrain)
+
+        logging.info("Saving model into the model folder")
+        model_directory = 'model'
+        if not os.path.exists(model_directory):
+            os.makedirs(model_directory)
+
+        model_filename = os.path.join(model_directory, 'best_xgb_model.pkl')
+        with open(model_filename, 'wb') as file:
+            pickle.dump(best_bst, file)
+        
+        
         logging.info('#' * 100)
 
+
+    
     except Exception as e:
         logging.error(f"An error occurred: {str(e)}")
 
