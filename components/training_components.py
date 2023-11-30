@@ -22,7 +22,7 @@ def step_data_splitting():
     packages_to_install=['numpy==1.26.2', 'logging==0.4.9.6', 'scikit-learn==1.3.2', 'aim==3.17.5', 'optuna==3.4.0', 'xgboost==2.0.2'],
     base_image='python:3.11'
 )
-def step_hyperpara_optim():
+def step_hyperparam_optim():
     hyperparam_optim()
 
 

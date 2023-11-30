@@ -1,1 +1,1 @@
-from .training_piepeline import customer_freq_training_pipeline
+from .training_pipeline import customer_freq_training_pipeline
