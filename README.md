@@ -89,6 +89,12 @@ This will open a dashboard in your browser for monitoring.
 
 It will look something like this
 
+![swappy-20231130_123149](https://github.com/viraj-s15/customer-freq-pipeline/assets/79002760/92a36850-93e2-470a-9455-4a305162fb41)
+
+![swappy-20231130_123119](https://github.com/viraj-s15/customer-freq-pipeline/assets/79002760/28ff8c1f-68bb-4213-99e6-e0fdc712b1d4)
+
+
+
 ## 🚀 Deployment <a name = "deployment"></a>
 
 Gradio frontend has been built, can be deployed anywhere using the `inference.py` script
