@@ -1,6 +1,6 @@
 import kfp 
 from kfp import dsl
-from components import step_data_preprocessing,step_data_splitting,step_model_testing,step_hyperparam_optim
+from components import step_data_preprocessing,step_data_splitting,step_hyperparam_optim,step_model_testing
 
 @dsl.pipeline(
     name='Customer Frequency Training Pipeline',
