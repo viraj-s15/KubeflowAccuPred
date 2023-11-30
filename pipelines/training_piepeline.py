@@ -24,8 +24,8 @@ def customer_freq_training_pipeline(data_path: str):
     hyperparam_optim_task.execution_options.caching_strategy.max_cache_staleness = "P0D"
     model_testing_task.execution_options.caching_strategy.max_cache_staleness = "P0D"
 
-pipeline_func = customer_freq_training_pipeline
+    pipeline_func = customer_freq_training_pipeline
 
-kfp.compiler.Compiler().compile(
-    pipeline_func=customer_freq_training_pipeline,
-    package_path='Customer_freq_training.yaml')
+    kfp.compiler.Compiler().compile(
+        pipeline_func=customer_freq_training_pipeline,
+        package_path='Customer_freq_training.yaml')
