@@ -14,4 +14,5 @@ run_result = client.create_run_from_pipeline_package(
     experiment_name=experiment_name,
     run_name=run_name,
     namespace="kubeflow",
+    enable_caching = False
 )

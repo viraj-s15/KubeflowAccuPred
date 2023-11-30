@@ -1,1 +1,0 @@
-from .training_pipeline import customer_freq_training_pipeline
