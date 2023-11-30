@@ -9,6 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "3.11.6"
 kfp = "^2.4.0"
+gradio = "^4.7.1"
 
 [tool.poetry.group.dev.dependencies]
 pandas = "^2.1.3"

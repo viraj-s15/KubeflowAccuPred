@@ -1,9 +1,12 @@
-from data_preprocessing import data_preprocessing
-from data_splits import data_spltting  
-from hyperparam_optimisation import hyperparam_optim
-from model_testing import model_testing
+import pandas as pd
+import numpy as np
 
-data_preprocessing()
-data_spltting()
-hyperparam_optim()
-model_testing()
+filename = "./data/data.csv"
+df = pd.read_csv(filename)
+cols = df.columns
+
+cols_main = []
+for col in cols:
+    print(col)
+    print(f"{list(df[col].unique())}")
+    
