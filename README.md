@@ -50,7 +50,6 @@ I have kubectl aliased to `minikube kubectl --`
 ```
 minikube start --cpus 4 --memory 4000 --disk-size=10g
 
-
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 
 git clone git@github.com:kubeflow/manifests.git
