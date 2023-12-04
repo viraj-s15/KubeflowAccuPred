@@ -2,7 +2,7 @@ from kfp import dsl
 from data_preprocessing import data_preprocessing
 from data_splits import data_spltting
 from hyperparam_optimisation_catboost import hyperparam_optimisation_catboost
-from model_testing import model_testing
+from model_testing_catboost import model_testing_catboost
 
 
 @dsl.component(
@@ -52,9 +52,9 @@ def step_hyperparam_optim():
         "logging==0.4.9.6",
         "scikit-learn==1.3.2",
         "aim==3.17.5",
-        "xgboost==2.0.2",
+        "catboost==1.2.2",
     ],
     base_image="python:3.11",
 )
 def step_model_testing():
-    model_testing
+    model_testing_catboost()

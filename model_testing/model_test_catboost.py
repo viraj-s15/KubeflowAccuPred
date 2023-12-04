@@ -1,4 +1,4 @@
-def model_testing() -> None:
+def model_testing_catboost() -> None:
     import numpy as np
     from catboost import CatBoostRegressor
     from sklearn.metrics import mean_squared_error

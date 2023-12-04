@@ -10,6 +10,7 @@ readme = "README.md"
 python = "3.11.6"
 kfp = "^2.4.0"
 gradio = "^4.7.1"
+catboost = "^1.2.2"
 
 [tool.poetry.group.dev.dependencies]
 pandas = "^2.1.3"
