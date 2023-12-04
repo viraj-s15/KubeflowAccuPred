@@ -1,1 +1,2 @@
 from .hyperparam_optim import hyperparam_optim
+from .hyperparam_optim_catboost import hyperparam_optim_catboost
