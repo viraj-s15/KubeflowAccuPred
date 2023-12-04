@@ -38,7 +38,7 @@ def step_data_splitting():
         "scikit-learn==1.3.2",
         "aim==3.17.5",
         "optuna==3.4.0",
-        "xgboost==2.0.2",
+        "catboost==1.2.2",
     ],
     base_image="python:3.11",
 )
