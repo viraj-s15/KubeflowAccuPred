@@ -1,0 +1,179 @@
+# PIPELINE DEFINITION
+# Name: customer-frequency-training-pipeline
+# Description: A kubernetes pipeline for training a customer freq prediction model
+components:
+  comp-step-data-preprocessing-catboost:
+    executorLabel: exec-step-data-preprocessing-catboost
+  comp-step-data-splitting-catboost:
+    executorLabel: exec-step-data-splitting-catboost
+  comp-step-hyperparam-optim-catboost:
+    executorLabel: exec-step-hyperparam-optim-catboost
+  comp-step-model-testing-catboost:
+    executorLabel: exec-step-model-testing-catboost
+deploymentSpec:
+  executors:
+    exec-step-data-preprocessing-catboost:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - step_data_preprocessing_catboost
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.4.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'pandas==2.1.3'\
+          \ 'numpy==1.26.2' 'logging==0.4.9.6' 'scikit-learn==1.3.2' && \"$0\" \"\
+          $@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef step_data_preprocessing_catboost():\n    data_preprocessing()\n\
+          \n"
+        image: python:3.11
+    exec-step-data-splitting-catboost:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - step_data_splitting_catboost
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.4.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'pandas==2.1.3'\
+          \ 'numpy==1.26.2' 'logging==0.4.9.6' 'scikit-learn==1.3.2' && \"$0\" \"\
+          $@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef step_data_splitting_catboost():\n    data_spltting()\n\n"
+        image: python:3.11
+    exec-step-hyperparam-optim-catboost:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - step_hyperparam_optim_catboost
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.4.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'numpy==1.26.2'\
+          \ 'logging==0.4.9.6' 'scikit-learn==1.3.2' 'aim==3.17.5' 'optuna==3.4.0'\
+          \ 'catboost==1.2.2' && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef step_hyperparam_optim_catboost():\n    hyperparam_optimisation_catboost()\n\
+          \n"
+        image: python:3.11
+    exec-step-model-testing-catboost:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - step_model_testing_catboost
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet --no-warn-script-location 'kfp==2.4.0'\
+          \ '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"'  &&\
+          \  python3 -m pip install --quiet --no-warn-script-location 'numpy==1.26.2'\
+          \ 'logging==0.4.9.6' 'scikit-learn==1.3.2' 'aim==3.17.5' 'catboost==1.2.2'\
+          \ && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          _KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef step_model_testing_catboost():\n    model_testing_catboost()\n\
+          \n"
+        image: python:3.11
+pipelineInfo:
+  description: A kubernetes pipeline for training a customer freq prediction model
+  name: customer-frequency-training-pipeline
+root:
+  dag:
+    tasks:
+      step-data-preprocessing-catboost:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-step-data-preprocessing-catboost
+        taskInfo:
+          name: step-data-preprocessing-catboost
+      step-data-splitting-catboost:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-step-data-splitting-catboost
+        dependentTasks:
+        - step-data-preprocessing-catboost
+        taskInfo:
+          name: step-data-splitting-catboost
+      step-hyperparam-optim-catboost:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-step-hyperparam-optim-catboost
+        dependentTasks:
+        - step-data-splitting-catboost
+        taskInfo:
+          name: step-hyperparam-optim-catboost
+      step-model-testing-catboost:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-step-model-testing-catboost
+        dependentTasks:
+        - step-hyperparam-optim-catboost
+        taskInfo:
+          name: step-model-testing-catboost
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.4.0

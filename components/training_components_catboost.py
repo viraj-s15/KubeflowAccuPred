@@ -1,8 +1,8 @@
 from kfp import dsl
 from data_preprocessing import data_preprocessing
 from data_splits import data_spltting
-from hyperparam_optimisation_catboost import hyperparam_optimisation_catboost
-from model_testing_catboost import model_testing_catboost
+from hyperparam_optimisation import hyperparam_optim_catboost
+from model_testing import model_testing_catboost
 
 
 @dsl.component(
@@ -14,7 +14,7 @@ from model_testing_catboost import model_testing_catboost
     ],
     base_image="python:3.11",
 )
-def step_data_preprocessing():
+def step_data_preprocessing_catboost():
     data_preprocessing()
 
 
@@ -27,7 +27,7 @@ def step_data_preprocessing():
     ],
     base_image="python:3.11",
 )
-def step_data_splitting():
+def step_data_splitting_catboost():
     data_spltting()
 
 
@@ -42,7 +42,7 @@ def step_data_splitting():
     ],
     base_image="python:3.11",
 )
-def step_hyperparam_optim():
+def step_hyperparam_optim_catboost():
     hyperparam_optimisation_catboost()
 
 
@@ -56,5 +56,5 @@ def step_hyperparam_optim():
     ],
     base_image="python:3.11",
 )
-def step_model_testing():
+def step_model_testing_catboost():
     model_testing_catboost()
